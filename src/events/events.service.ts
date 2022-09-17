@@ -92,7 +92,7 @@ export class EventsService {
 
   @Get('events')
   async getEventsWithWorkshops() {
-    return this.eventRepository.find({ relations: { workshops: true } });
+    return await this.eventRepository.find({ relations: { workshops: true } });
   }
 
   /*
@@ -163,7 +163,7 @@ export class EventsService {
   @Get('futureevents')
   async getFutureEventWithWorkshops() {
     const todayDate = new Date();
-    return this.eventRepository
+    return await this.eventRepository
       .createQueryBuilder('event')
       .innerJoinAndSelect('event.workshops', 'workshops')
       .where('workshops.start > :todayDate', { todayDate })
