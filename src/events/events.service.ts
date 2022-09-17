@@ -2,15 +2,12 @@ import { Repository } from 'typeorm';
 import { Get, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Event } from './entities/event.entity';
-import { Workshop } from './entities/workshop.entity';
 
 @Injectable()
 export class EventsService {
   constructor(
     @InjectRepository(Event)
-    private eventRepository: Repository<Event>,
-    @InjectRepository(Workshop)
-    private workshopRepository: Repository<Workshop>,
+    private eventRepository: Repository<Event>
   ) { }
 
   getWarmupEvents() {
