@@ -8,8 +8,8 @@ import { Workshop } from './entities/workshop.entity';
 export class EventsService {
   constructor(
     @InjectRepository(Event)
-    @InjectRepository(Workshop)
     private eventRepository: Repository<Event>,
+    @InjectRepository(Workshop)
     private workshopRepository: Repository<Workshop>,
   ) { }
 
@@ -95,7 +95,7 @@ export class EventsService {
 
   @Get('events')
   async getEventsWithWorkshops() {
-    return this.workshopRepository.find();
+    return this.eventRepository.find({ relations: { workshops: true } });
   }
 
   /*

@@ -21,6 +21,6 @@ export class Workshop {
   @Column({ type: 'datetime' })
   createdAt: string;
 
-  @ManyToOne((type) => Event, (event) => event.id)
+  @ManyToOne(() => Event, (event) => event.workshops)
   event: Event;
 }
