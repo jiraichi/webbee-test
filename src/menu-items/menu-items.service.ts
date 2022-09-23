@@ -85,9 +85,26 @@ export class MenuItemsService {
     */
 
     async getMenuItems() {
-        // this one fail
-        // could be solved with js not sure if I can make it with sql
         const menuItems = await this.menuItemRepository.find();
-        return menuItems;
+
+        const menuTree = this.menuTree(menuItems);
+
+        return menuTree;
+    }
+
+    // probably put this func in helpers/utils if there is a reason to make it more generic
+    menuTree(menu: MenuItem[], parentId = null) {
+        return menu.reduce((p: any, c: any) => {
+            if (c.parentId == parentId) {
+                const childObject = { ...c };
+                // recursive approach to construct children array
+                const children = this.menuTree(menu, c.id);
+                // check if there are any childs and assign children to object
+                if (children.length) childObject.children = children;
+
+                p.push(childObject);
+            }
+            return p;
+        }, []);
     }
 }
